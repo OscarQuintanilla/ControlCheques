@@ -116,7 +116,7 @@ export class ChequesController {
         (err, recordset) => {
           if (err) {
             pool.close();
-            console.log(req.body);
+            console.log(err);
             res.send(err);
           } else {
             pool.close();
@@ -139,7 +139,7 @@ export class ChequesController {
       if (err) {
         console.log(err);
       }
-      request.query(
+      request.batch(
         `INSERT INTO Chqs VALUES (${req.body})`,
         (err, recordset) => {
           if (err) {
@@ -149,6 +149,32 @@ export class ChequesController {
           } else {
             pool.close();
             res.send(req.body);
+          }
+        }
+      );
+    });
+  }
+
+  public eliminarCheque(req: Request, res: Response) {
+    const pool = new sql.ConnectionPool(keys);
+    const request = new sql.Request(pool);
+
+    const { ChequeNo } = req.body;
+
+    pool.connect(function(err) {
+      if (err) {
+        console.log(err);
+      }
+      request.batch(
+        `DELETE FROM Chqs WHERE ChequeNo = (${ChequeNo})`,
+        (err, recordset) => {
+          if (err) {
+            pool.close();
+            console.log(err);
+            res.send(err);  
+          } else {
+            pool.close();
+            res.send(recordset);
           }
         }
       );
