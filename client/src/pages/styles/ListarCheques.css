@@ -1,0 +1,17 @@
+.chequeBadge {
+  min-height: 7vh;
+  border: solid 1px #CCC;
+  border-radius: 15px;
+  text-align: center;
+  padding: 1%;
+  box-sizing: border-box;
+}
+
+.header {
+  border-radius: 15px;
+  padding: 1%;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  box-sizing: border-box;
+}
