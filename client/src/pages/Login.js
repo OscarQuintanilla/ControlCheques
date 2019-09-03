@@ -3,7 +3,7 @@ import FormLogin from '../components/FormLogin';
 import "./styles/Login.css";
 import api from '../api';
 import { Redirect } from "react-router-dom";
-import Loader from '../components/Loader';
+import PageLoading from "../components/PageLoading";
 
 class Login extends React.Component {
 
@@ -55,8 +55,8 @@ class Login extends React.Component {
 
     render() {
         if (this.state.loading === true) {
-            return <Loader />
-        }
+            return <PageLoading />
+            }
 
         if (this.state.user !== undefined) {
             return <Redirect to='/cheques/listar' />

@@ -27,18 +27,16 @@ const api = {
         body: JSON.stringify(cheque),
       });
     },
-    read(badgeId) {
-      return callApi(`/badges/${badgeId}`);
-    },
-    update(badgeId, updates) {
-      return callApi(`/badges/${badgeId}`, {
+    update(cheque) {
+      return callApi(`/cheques/modificar`, {
         method: 'PUT',
-        body: JSON.stringify(updates),
+        body: JSON.stringify(cheque),
       });
     },
-    remove(badgeId) {
-      return callApi(`/badges/${badgeId}`, {
-        method: 'DELETE',
+    remove(chequeNo) {
+      return callApi(`/cheques/eliminar`, {
+        method: 'POST',
+        body: JSON.stringify(chequeNo),
       });
     },
   },
@@ -51,7 +49,5 @@ const api = {
     },
   },
 };
-
-
 
 export default api;

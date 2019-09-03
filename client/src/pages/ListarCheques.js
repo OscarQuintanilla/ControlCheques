@@ -3,7 +3,7 @@ import HeaderBar from "../components/HeaderBar";
 import api from '../api';
 import "./styles/ListarCheques.css";
 import PageLoading from '../components/PageLoading';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 class ListarCheques extends React.Component {
 
@@ -12,6 +12,39 @@ class ListarCheques extends React.Component {
     error: null,
     listaCheques: undefined,
     user: undefined,
+    modificable: undefined,
+
+  }
+
+  constructor(props) {
+    super(props);
+    this.modificarCheque = this.modificarCheque.bind(this);
+    this.eliminarCheque = this.eliminarCheque.bind(this);
+  }
+
+  modificarCheque(cheque) {
+    this.setState({
+      modificable: cheque,
+    });
+  }
+
+  eliminarCheque = async (ChequeNo) => {
+    console.log(ChequeNo);
+    this.setState({
+      loading: true,
+    });
+    try {
+      await api.cheques.remove(ChequeNo);
+      this.fetchData();
+      this.setState({
+        loading: false,
+      });
+    } catch (error) {
+      console.log(error);
+      this.setState({
+        loading: false,
+      });
+    }
 
   }
 
@@ -39,6 +72,11 @@ class ListarCheques extends React.Component {
         </div>
       );
     }
+
+    if (this.state.modificable !== undefined) {
+      return <Redirect to={{ pathname: "/cheques/registrar", state: { cheque: this.state.modificable } }} cheque={this.state.modificable} />
+    }
+
     return (
       <div>
         <HeaderBar />
@@ -70,10 +108,10 @@ class ListarCheques extends React.Component {
                     <div className="col-2">
                       <div className="row">
                         <div className="col-6">
-                          <button type="button" className="form-control btn-info">Modifcar</button>
+                          <button type="button" onClick={() => { this.modificarCheque(cheque) }} className="form-control btn-info">Modifcar</button>
                         </div>
                         <div className="col-6">
-                          <button type="button" className="form-control btn-danger">Eliminar</button>
+                          <button type="button" onClick={() => { this.eliminarCheque(cheque.ChequeNo) }} className="form-control btn-danger">Eliminar</button>
                         </div>
                       </div>
                     </div>

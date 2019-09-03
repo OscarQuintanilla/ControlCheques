@@ -42,7 +42,7 @@ class FormCheques extends React.Component {
                                 <option>5</option>
                             </select>
                         </div>
-                        <button className="btn btn-primary" >Registrar Cheque</button>
+                        <button className="btn btn-primary" > {this.props.modificando ? "Modificar Cheque" : "Registrar Cheque"} </button>
                     </form>
                 </div>
             </div>

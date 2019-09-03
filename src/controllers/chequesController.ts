@@ -131,16 +131,59 @@ export class ChequesController {
     const pool = new sql.ConnectionPool(keys);
     const request = new sql.Request(pool);
 
-    const { Dealer, Cuenta, Fecha, Nombre, Valor, Concepto } = req.body;
+    var {
+      CodPais, //Login
+      Dealer, //Login
+      Tda, //Login
+      Cuenta,
+      ChequeNo,
+      Fecha,
+      Partida, // Blanco
+      Nombre,
+      Valor,
+      Concepto,
+      CargoCuenta, //Blanco
+      Estatus,
+      Hecho, //Login Nombre del Usuario
+      Anular,
+      Rubro,
+      Linea, //1
+      Proveedor, //Bln
+      OrdenCompra, // 0
+      MarcaAnticipo, // 0
+      SaldoAnticipo, // 0
+      SolicitadoPor, //Blanco
+      FechaCobro // 1/1/1901
+    } = req.body;
 
     pool.connect(function(err) {
-      res.send(req.body);
-
       if (err) {
         console.log(err);
       }
       request.batch(
-        `INSERT INTO Chqs VALUES (${req.body})`,
+        `UPDATE Chqs SET 
+          CodPais ='${CodPais}',      
+          Dealer = ${Dealer},     
+          Tda = '${Tda}',          
+          Cuenta = '${Cuenta}',  
+          Fecha = '${Fecha}',
+          Partida = '${Partida}',    
+          Nombre = '${Nombre}',       
+          Valor = ${Valor},          
+          Concepto = '${Concepto}',
+          CargoCuenta = '${CargoCuenta}',
+          Estatus = ${Estatus},    
+          Hecho = '${Hecho}',        
+          Anular = 0,         
+          Rubro = ${Rubro},
+          Linea = ${Linea}, 
+          Proveedor = '${Proveedor}',
+          OrdenCompra = ${OrdenCompra},  
+          MarcaAnticipo = 0, 
+          SaldoAnticipo = ${SaldoAnticipo},
+          SolicitadoPor = '${SolicitadoPor} ',
+          FechaCobro = '${FechaCobro}' 
+         WHERE ChequeNo = ${ChequeNo}`,
         (err, recordset) => {
           if (err) {
             pool.close();
@@ -159,30 +202,23 @@ export class ChequesController {
     const pool = new sql.ConnectionPool(keys);
     const request = new sql.Request(pool);
 
-    const { ChequeNo } = req.body;
-
     pool.connect(function(err) {
       if (err) {
         console.log(err);
       }
-      request.batch(
-        `DELETE FROM Chqs WHERE ChequeNo = (${ChequeNo})`,
-        (err, recordset) => {
-          if (err) {
-            pool.close();
-            console.log(err);
-            res.send(err);  
-          } else {
-            pool.close();
-            res.send(recordset);
-          }
+      request.batch(`SELECT * FROM Chqs `, (err, recordset) => {
+        if (err) {
+          pool.close();
+          console.log(err);
+          res.send(err);
+        } else {
+          pool.close();
+          res.send(recordset);
         }
-      );
+      });
     });
   }
 }
 
 const chequesController = new ChequesController();
 export default chequesController;
-
-// INSERT INTO Chqs (Dealer, Cuenta, Fecha, Nombre,  Valor, Concepto) VALUES (${Dealer},${Cuenta},${Fecha},${Nombre},${Valor},${Concepto})
