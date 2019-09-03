@@ -1,9 +1,12 @@
 .Navbar {
   color: #ffffff;
-  width: 100%;
   font-size: 1.5em;
   padding: 0.5rem 0;
   background-color: #1C3643;
+}
+
+.row{
+  max-width: 100%;
 }
 
 .Navbar__brand {

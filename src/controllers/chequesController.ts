@@ -202,20 +202,25 @@ export class ChequesController {
     const pool = new sql.ConnectionPool(keys);
     const request = new sql.Request(pool);
 
+    const { id } = req.body;
+
     pool.connect(function(err) {
       if (err) {
         console.log(err);
       }
-      request.batch(`SELECT * FROM Chqs `, (err, recordset) => {
-        if (err) {
-          pool.close();
-          console.log(err);
-          res.send(err);
-        } else {
-          pool.close();
-          res.send(recordset);
+      request.batch(
+        `DELETE FROM Chqs WHERE ChequeNo = ${id}`,
+        (err, recordset) => {
+          if (err) {
+            pool.close();
+            console.log(err);
+            res.send(err);
+          } else {
+            pool.close();
+            res.send(req.body);
+          }
         }
-      });
+      );
     });
   }
 }

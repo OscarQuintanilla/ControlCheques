@@ -33,8 +33,9 @@ class HeaderBar extends React.Component {
 
     return (
       <div className="Navbar">
-        <div className="row ml-3">
-          <div className="col-10">
+        <div className="row ">
+          <div className="col-1"> </div>
+          <div className="col-9">
             <Link to="/" className="Navbar__brand" >
               <span className="font-weight-strong">Elyte</span>
               <span className="font-weight-light">Soft</span>
