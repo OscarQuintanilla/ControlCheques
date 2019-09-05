@@ -24,7 +24,7 @@ class InsertarCheques extends React.Component {
       Estatus: 1,
       Hecho: this.user.Nombre, //Login Nombre del Usuario
       Anular: 0,
-      Rubro: 1,
+      Rubro: 0,
       Linea: 1,
       Proveedor: "", //Blanco
       OrdenCompra: 0,
@@ -33,6 +33,7 @@ class InsertarCheques extends React.Component {
       SolicitadoPor: "", //Blanco
       FechaCobro: "" //1/1/1991
     },
+    listaRubros: undefined,
     loading: false,
     redirect: false,
     modificando: false
@@ -47,17 +48,16 @@ class InsertarCheques extends React.Component {
     }
   }
 
-  transformDateToSQL(date) {
-    const day = date.getDay();
-    const month = date.getMonth();
-    const year = date.getFullYear();
+  transformDateToSQL(lista) {
+    lista.map(cheque => {
+      let date = cheque.Fecha;
+      let year = date.slice(0, 4);
+      let month = date.slice(5, 7);
+      let day = date.slice(8, 10);
 
-    const sqlDate = year + "-" + month + "-" + day;
+      cheque.Fecha = year + "-" + month + "-" + day;
 
-    this.setState({
-      form: {
-        Fecha: sqlDate
-      }
+      return 0;
     });
   }
 
@@ -126,6 +126,8 @@ class InsertarCheques extends React.Component {
               onSubmit={this.handleSubmit}
               onChange={this.handleChange}
               modificando={this.state.modificando}
+              rubros={this.state.listaRubros}
+              user={this.state.form}
             />
           </div>
         </div>

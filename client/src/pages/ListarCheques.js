@@ -53,14 +53,15 @@ class ListarCheques extends React.Component {
   }
 
   transformDateToJS(lista) {
-    // mm dd yyyy
     lista.map(cheque => {
       let date = cheque.Fecha;
-      let day = date.slice(0, 4);
+      let year = date.slice(0, 4);
       let month = date.slice(5, 7);
-      let year = date.slice(8, 10);
+      let day = date.slice(8, 10);
 
-      cheque.Fecha = month + "-" + day + "-" + year;
+      cheque.Fecha = year + "-" + month + "-" + day;
+
+      return 0;
     });
   }
 
@@ -69,6 +70,7 @@ class ListarCheques extends React.Component {
       const listaCheques = await api.cheques.list(
         JSON.parse(sessionStorage.getItem("user"))
       );
+      this.transformDateToJS(listaCheques);
       this.setState({ loading: false, listaCheques: listaCheques });
     } catch (error) {
       this.setState({ loading: false, error: error });
@@ -106,8 +108,8 @@ class ListarCheques extends React.Component {
           <div className="col-1" />
           <div className="col-10">
             <div className="row header mx-5 my-2">
-              <div className="col-1">Cuenta</div>
               <div className="col-1"># Cheque</div>
+              <div className="col-1">Cuenta</div>
               <div className="col-2">Fecha</div>
               <div className="col-2">Nombre</div>
               <div className="col-1">Valor</div>
@@ -126,11 +128,11 @@ class ListarCheques extends React.Component {
 
               return (
                 <div className="chequeBadge row mx-5 mb-3" key={i - 1}>
-                  <div className="col-1" name="cuenta">
-                    {cheque.Cuenta}
-                  </div>
                   <div className="col-1" name="numCheque">
                     {cheque.ChequeNo}
+                  </div>
+                  <div className="col-1" name="cuenta">
+                    {cheque.Cuenta}
                   </div>
                   <div className="col-2" name="fechaCheque">
                     {cheque.Fecha}

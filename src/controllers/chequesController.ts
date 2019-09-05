@@ -223,6 +223,33 @@ export class ChequesController {
       );
     });
   }
+
+  public listarRubros(req: Request, res: Response) {
+    const pool = new sql.ConnectionPool(keys);
+    const request = new sql.Request(pool);
+
+    const { Dealer } = req.body;
+
+    pool.connect(function(err) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      request.query(
+        `SELECT * FROM Rubro WHERE Dealer = ${Dealer}`,
+        (err, recordset) => {
+          if (err) {
+            pool.close();
+            console.log(err);
+            res.send(err);
+          } else {
+            pool.close();
+            res.json(recordset.recordset);
+          }
+        }
+      );
+    });
+  }
 }
 
 const chequesController = new ChequesController();

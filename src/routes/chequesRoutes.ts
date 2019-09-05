@@ -13,6 +13,7 @@ class ChequesRoutes {
     this.router.post("/registrar", chequesController.registrarCheque);
     this.router.put("/modificar", chequesController.modificarCheque);
     this.router.post("/eliminar", chequesController.eliminarCheque);
+    this.router.post("/rubros", chequesController.listarRubros);
   }
 }
 
