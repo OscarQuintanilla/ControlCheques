@@ -4,6 +4,7 @@ import FormCheques from "../components/formCheques";
 import api from "../api";
 import PageLoading from "../components/PageLoading";
 import { Redirect, Link } from "react-router-dom";
+import "../pages/styles/InsertarCheques.css";
 
 class InsertarCheques extends React.Component {
   user = JSON.parse(sessionStorage.getItem("user"));
@@ -110,27 +111,23 @@ class InsertarCheques extends React.Component {
       <div>
         <HeaderBar />
         <br />
-        <div className="row mb-4">
-          <div className="col-4" />
-          <div className="col-8 center">
+        <div className="mb-4">
+          <div className="col-12 centrar ">
             <Link to="/cheques/listar">
-              <button className="btn btn-secondary">Regresar</button>
+              <button className="btn btn-secondary col col-sm-12 col-md-6 col-lg-4 ">
+                Regresar
+              </button>
             </Link>
           </div>
         </div>
-        <div className="row">
-          <div className="col-4" />
-          <div className="col-8 center">
-            <FormCheques
-              formValues={this.state.form}
-              onSubmit={this.handleSubmit}
-              onChange={this.handleChange}
-              modificando={this.state.modificando}
-              rubros={this.state.listaRubros}
-              user={this.state.form}
-            />
-          </div>
-        </div>
+        <FormCheques
+          formValues={this.state.form}
+          onSubmit={this.handleSubmit}
+          onChange={this.handleChange}
+          modificando={this.state.modificando}
+          rubros={this.state.listaRubros}
+          user={this.state.form}
+        />
       </div>
     );
   }

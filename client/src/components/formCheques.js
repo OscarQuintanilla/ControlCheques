@@ -35,8 +35,8 @@ class FormCheques extends React.Component {
       return <Loader />;
     }
     return (
-      <div className="row">
-        <div className="col-6">
+      <div className="col-12 centrar  ">
+        <div className="col col-sm-12 col-md-6 col-lg-4  centrar">
           <form onSubmit={this.props.onSubmit}>
             <div className="form-group">
               <label>Cuenta</label>
@@ -105,7 +105,7 @@ class FormCheques extends React.Component {
               <select
                 name="Rubro"
                 className="form-control"
-                value={this.props.formValues.Concepto}
+                value={this.props.formValues.Rubro}
                 onChange={this.props.onChange}
               >
                 {this.state.listaRubros.map((rubro, i) => {
